@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+{% block title %} Chai aur Tweet {% endblock %}
+
+{% block content %}
+<div class="delete-confirmation-container text-center mt-5">
+    <h1 class="mb-4">Are you sure you want to delete this tweet?</h1>
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-danger btn-lg me-3" type="submit">Delete</button>
+        <a class="btn btn-success btn-lg" href="{% url 'tweet:tweet_list' %}">Back</a>
+    </form>
+</div>
+
+<style>
+    .delete-confirmation-container {
+        max-width: 600px;
+        margin: 0 auto; /* Center the container */
+        padding: 20px;
+        background-color: #f8f9fa; /* Light background */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    }
+
+    h1 {
+        color: #dc3545; /* Red color for delete confirmation */
+        font-size: 1.75rem;
+        font-weight: 700;
+    }
+
+    .btn-lg {
+        font-size: 1.125rem; /* Slightly larger buttons */
+        padding: 10px 20px;
+        border-radius: 8px;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+</style>
+{% endblock %}

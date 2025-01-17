@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %} Read More - {{ tweet.user.username }} {% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Image Section -->
+        <div class="col-md-6">
+            {% if tweet.photo %}
+            <img src="{{ tweet.photo.url }}" alt="Tweet Image" class="img-fluid" style="max-width: 100%; height: auto;">
+            {% endif %}
+        </div>
+        <!-- Text Section -->
+        <div class="col-md-6">
+            <h1>{{ tweet.user.username }}</h1>
+            <p>{{ tweet.text }}</p>
+        </div>
+    </div>
+    <br><br><br><br>
+    <a class="btn btn-primary" href="{% url 'tweet:tweet_list' %}">Back to Tweets</a> <!-- Button to go back -->
+</div>
+{% endblock %}

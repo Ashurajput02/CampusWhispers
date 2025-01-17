@@ -1,0 +1,189 @@
+{% extends "layout.html" %}
+
+{% block title %} Chai aur Tweet {% endblock %}
+
+{% block content %}
+<div class="header-container">
+  <h1 class="text-center mt-4">CampusWhispers</h1>
+
+  <a class="btn btn-secondary create-tweet-btn" href="{% url 'tweet:tweet_create' %}">Create a Tweet</a>
+</div>
+
+<!-- Directly include your CSS here -->
+<style>
+  /* Flex container to align heading and button */
+  .header-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Align vertically */
+    gap: 20px; /* Add space between heading and button */
+    margin-bottom: 20px; /* Add space below the container */
+  }
+
+  .header-container h1 {
+    margin: 0; /* Remove default margin for better alignment */
+    font-size: 1.75rem;
+    font-weight: 900;
+  }
+
+  :root {
+    --accent: #00c0ea;
+  }
+
+  .btn-secondary {
+    background-color: #00c0ea;
+    color: #fff;
+    font-size: 0.875rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+    width: auto;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+
+  .btn-secondary:hover {
+    background-color: #5a6268;
+  }
+
+  @import url('https://fonts.googleapis.com/css?family=Lato:400,700,900&display=swap');
+
+  body {
+    font-family: "Lato", Arial, "Helvetica Neue", Helvetica, sans-serif;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 900;
+  }
+
+  h2 {
+    font-size: 1.375rem;
+    font-weight: 900;
+    line-height: 28px;
+  }
+
+  .container {
+    margin: 0 auto;
+    padding: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .article {
+    border: 1px solid #dbdbdb;
+    margin: 0 0 20px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.06);
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: row;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .article__content {
+    padding: 15px 25px;
+    flex: 1;
+    color: #333; /* Darker text color */
+  }
+
+  .article__image {
+    width: 250px; /* Adjusted width for better appearance */
+    height: 150px; /* Adjusted height for better appearance */
+    overflow: hidden;
+  }
+
+  .article__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the entire box without stretching */
+  }
+
+  .article__image:hover {
+    opacity: 0.7;
+    transition: opacity 0.5s ease-out;
+  }
+
+  .article__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 24px;
+  }
+
+  .article__footer {
+    color: #818181;
+    font-size: 0.875rem;
+    margin-top: 10px;
+  }
+
+  /* Read More button styling */
+  .btn-read-more {
+    margin-right: 10px; /* Add space between buttons */
+  }
+
+  /* Align buttons in a row */
+  .button-group {
+    display: flex;
+    justify-content: flex-start; /* Align buttons to the left */
+    gap: 10px; /* Space between buttons */
+  }
+
+  /* Create a Tweet button styling */
+  .create-tweet-btn {
+    font-size: 0.875rem; /* Smaller font size */
+    line-height: 1; /* Adjust line height for compact look */
+    padding: 8px 12px; /* Smaller padding for reduced size */
+    border-radius: 4px; /* Add a slight rounding for a clean look */
+    margin-bottom: 10px; /* Add space below the button */
+  }
+
+  /* Desktop styles */
+  @media (min-width: 700px) {
+    .container {
+      width: 900px;
+    }
+    .article {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+</style>
+
+<div class="container">
+  {% for tweet in tweets %}
+  <div class="article">
+    <div class="article__content">
+      <h5 class="article__title">{{ tweet.user.username }}</h5>
+      <p class="card-text">{{ tweet.text|truncatewords:20 }}</p> <!-- Show only 20 words -->
+
+      <div class="button-group"> <!-- Button group for alignment -->
+        <a href="{% url 'tweet:read_more' tweet.id %}" class="btn btn-info btn-read-more">Read More</a>
+        {% if tweet.user.username == user.username %}
+        <a href="{% url 'tweet:tweet_edit' tweet.id %}" class="btn btn-primary">Edit</a>
+        <a href="{% url 'tweet:tweet_delete' tweet.id %}" class="btn btn-danger">Delete</a>
+        {% endif %}
+      </div>
+    </div>
+    {% if tweet.photo %}
+    <div class="article__image">
+      <img src="{{ tweet.photo.url }}" alt="Tweet Image">
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
