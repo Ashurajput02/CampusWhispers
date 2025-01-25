@@ -1,13 +1,5 @@
 {
-    "version": 2,
-    "builds": [
-      {
-        "src": "infowall/wsgi.py",
-        "use": "@vercel/python"
-      }
-    ],
-    "env": {
-      "DJANGO_SETTINGS_MODULE": "infowall.settings"
-    }
+    "rewrites": [
+      { "source": "/(.*)", "destination": "/" }
+    ]
   }
-  
